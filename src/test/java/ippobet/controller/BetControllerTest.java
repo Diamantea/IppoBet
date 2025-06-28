@@ -1,19 +1,26 @@
 package ippobet.controller;
 
 import com.ippobet.controller.BetController;
+import com.ippobet.model.Bet;
 import com.ippobet.repository.BetRepository;
+import com.ippobet.view.BetView;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
+import java.util.List;
 
 public class BetControllerTest {
     @Test
-    void testIfEventControllerIsInstantiable(){
-        var repository = new BetRepository();
-        var controller = new BetController(repository);
-    }
-
-    @Test
     void testGetAllEvents() {
-        var repository = new BetRepository();
-        var controller = new BetController(repository);
+        var bets = List.of(new Bet());
+        var repository = Mockito.mock(BetRepository.class);
+        var view = Mockito.mock(BetView.class);
+        var controller = new BetController(repository, view);
+        Mockito.when(repository.findAllBets())
+                .thenReturn(bets);
+
+        controller.getAllEvents();
+
+        Mockito.verify(view).showAllBets(bets);
     }
 }
