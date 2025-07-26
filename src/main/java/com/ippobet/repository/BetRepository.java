@@ -4,8 +4,6 @@ import com.ippobet.model.Bet;
 
 import java.util.List;
 
-public class BetRepository {
-    public List<Bet> findAllBets() {
-        return List.of();
-    }
+public interface BetRepository {
+    List<Bet> findAllBets();
 }
