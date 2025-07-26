@@ -9,6 +9,6 @@ public class BetMongoRepository implements BetRepository
     @Override
     public List<Bet> findAllBets()
     {
-        return List.of();
+        return List.of(new Bet("Juventus", "Milan", "X", 2.1));
     }
 }

@@ -5,5 +5,5 @@ import com.ippobet.model.Bet;
 import java.util.List;
 
 public interface BetView {
-    void showAllBets(List<Bet> bets);
+    void updateBets(List<Bet> bets);
 }

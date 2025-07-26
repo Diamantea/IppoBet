@@ -12,7 +12,7 @@ import java.util.List;
 public class BetControllerTest {
     @Test
     void testGetAllEvents() {
-        var bets = List.of(new Bet());
+        var bets = List.of(new Bet("home", "away", "X", 1.2));
         var repository = Mockito.mock(BetRepository.class);
         var view = Mockito.mock(BetView.class);
         var controller = new BetController(repository, view);
@@ -21,6 +21,6 @@ public class BetControllerTest {
 
         controller.getAllEvents();
 
-        Mockito.verify(view).showAllBets(bets);
+        Mockito.verify(view).updateBets(bets);
     }
 }
