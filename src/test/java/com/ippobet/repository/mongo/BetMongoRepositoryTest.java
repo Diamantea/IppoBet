@@ -1,4 +1,4 @@
-package ippobet.repository.mongo;
+package com.ippobet.repository.mongo;
 
 import com.ippobet.repository.mongo.BetMongoRepository;
 import org.junit.jupiter.api.Test;

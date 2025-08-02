@@ -1,4 +1,4 @@
-package ippobet.controller;
+package com.ippobet.controller;
 
 import com.ippobet.controller.BetController;
 import com.ippobet.model.Bet;

@@ -1,4 +1,4 @@
-package ippobet.view.fx;
+package com.ippobet.view.fx;
 
 import com.ippobet.model.Bet;
 import com.ippobet.view.fx.BetFXViewBuilder;
