@@ -1,11 +1,9 @@
 package com.ippobet.view.fx;
 
 import com.ippobet.model.Bet;
-import com.ippobet.view.fx.BetFXViewBuilder;
 import java.util.List;
 import javafx.application.Platform;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.Region;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;

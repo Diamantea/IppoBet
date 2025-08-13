@@ -21,6 +21,8 @@ import org.bson.Document;
 
 public class App extends Application
 {
+    public static final String BETS_TABLE_ID = "bets_table";
+
     private static final String DEFAULT_DB_HOST = "localhost";
     private static final int DEFAULT_DB_PORT = 27017;
     private static final String DEFAULT_DB_NAME = "bet";
@@ -74,6 +76,7 @@ public class App extends Application
 
         TableView<Bet> table = new TableView<>();
         table.setEditable(true);
+        table.setId(BETS_TABLE_ID);
         BetFXViewBuilder view = new BetFXViewBuilder(table);
         BetController controller = new BetController(betRepository, view);
         Scene scene = new Scene(view.build());

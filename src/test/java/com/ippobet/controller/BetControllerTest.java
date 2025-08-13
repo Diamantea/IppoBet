@@ -1,6 +1,5 @@
 package com.ippobet.controller;
 
-import com.ippobet.controller.BetController;
 import com.ippobet.model.Bet;
 import com.ippobet.repository.BetRepository;
 import com.ippobet.view.BetView;
