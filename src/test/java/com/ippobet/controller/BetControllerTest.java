@@ -3,10 +3,9 @@ package com.ippobet.controller;
 import com.ippobet.model.Bet;
 import com.ippobet.repository.BetRepository;
 import com.ippobet.view.BetView;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
-import java.util.List;
 
 public class BetControllerTest {
     @Test

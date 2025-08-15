@@ -21,9 +21,7 @@ import org.junit.platform.suite.api.IncludeEngines;
 import org.junit.platform.suite.api.Suite;
 import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.utility.DockerImageName;
-import org.testfx.api.FxAssert;
 import org.testfx.framework.junit5.ApplicationTest;
-import org.testfx.osgi.service.TestFx;
 
 import static io.cucumber.junit.platform.engine.Constants.FEATURES_PROPERTY_NAME;
 import static io.cucumber.junit.platform.engine.Constants.GLUE_PROPERTY_NAME;
@@ -127,11 +125,5 @@ public class RunCucumberTest extends ApplicationTest
     {
         TableView<Bet> query = lookup("#" + App.BETS_TABLE_ID).query();
         Assertions.assertEquals(betsInDB, query.getItems().stream().toList());
-    }
-
-
-    @Given("test given")
-    public void testGiven()
-    {
     }
 }
