@@ -29,9 +29,9 @@ public class BetMongoRepositoryTest
         Mockito.when(findIterable.spliterator()).thenReturn(betsAsDoc.spliterator());
         Mockito.when(this.betCollection.find()).thenReturn(findIterable);
 
-        List<Bet> actualBets = this.repository.findAllBets();
+        var actualBets = this.repository.findAllBets();
 
-        List<Bet> expectedBets = List.of();
+        var expectedBets = List.<Bet>of();
         Assertions.assertEquals(expectedBets, actualBets);
     }
 
@@ -52,9 +52,19 @@ public class BetMongoRepositoryTest
         Mockito.when(findIterable.spliterator()).thenReturn(betsAsDoc.spliterator());
         Mockito.when(this.betCollection.find()).thenReturn(findIterable);
 
-        List<Bet> actualBets = this.repository.findAllBets();
+        var actualBets = this.repository.findAllBets();
 
-        List<Bet> expectedBets = BetMongoRepository.toBet(betsAsDoc.spliterator());
+        var expectedBets = BetMongoRepository.toBet(betsAsDoc.spliterator());
         Assertions.assertEquals(expectedBets, actualBets);
+    }
+
+    @Test
+    void testSaveDocument() {
+        var betToSave = new Bet("home 1", "away 1", "X", 1.7);
+        var betToSaveDoc = BetMongoRepository.toDocument(betToSave);
+
+        this.repository.save(betToSave);
+
+        Mockito.verify(this.betCollection).insertOne(betToSaveDoc);
     }
 }

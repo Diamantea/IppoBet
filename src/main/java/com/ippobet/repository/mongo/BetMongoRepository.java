@@ -30,6 +30,14 @@ public class BetMongoRepository implements BetRepository
         return toBet(betCollection.find().spliterator());
     }
 
+
+    @Override
+    public void save(Bet newBet)
+    {
+        betCollection.insertOne(toDocument(newBet));
+    }
+
+
     public static List<Bet> toBet(Spliterator<Document> iterator) {
         return StreamSupport.stream(iterator, false)
             .map(BetMongoRepository::toBet)
@@ -40,5 +48,14 @@ public class BetMongoRepository implements BetRepository
     {
         return new Bet(doc.getString(HOME_TEAM_ATTR), doc.getString(AWAY_TEAM_ATTR),
             doc.getString(OUTCOME_ATTR), doc.getInteger(ODD_ATTR));
+    }
+
+    public static Document toDocument(Bet bet)
+    {
+        return (new Document())
+            .append(BetMongoRepository.HOME_TEAM_ATTR, bet.getHomeTeam())
+            .append(BetMongoRepository.AWAY_TEAM_ATTR, bet.getAwayTeam())
+            .append(BetMongoRepository.OUTCOME_ATTR, bet.getOutcome())
+            .append(BetMongoRepository.ODD_ATTR, bet.getOdd());
     }
 }
