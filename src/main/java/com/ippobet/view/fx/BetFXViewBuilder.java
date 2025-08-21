@@ -1,28 +1,32 @@
 package com.ippobet.view.fx;
 
+import com.ippobet.controller.BetController;
 import com.ippobet.model.Bet;
 import com.ippobet.view.BetView;
 import java.util.List;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.util.Builder;
 import javafx.util.converter.DoubleStringConverter;
 
-public class BetFXViewBuilder implements Builder<Region>, BetView
-{
+public class BetFXViewBuilder implements Builder<Region>, BetView {
     private final TableView<Bet> table;
+    private final BetController betController;
 
 
-    public BetFXViewBuilder(TableView<Bet> table)
-    {
+    public BetFXViewBuilder(TableView<Bet> table, BetController betController) {
         this.table = table;
+        this.betController = betController;
     }
 
 
@@ -52,6 +56,8 @@ public class BetFXViewBuilder implements Builder<Region>, BetView
         oddCol.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
 
         table.getColumns().addAll(homeTeamCol, awayTeamCol, outcomeCol, oddCol);
+
+        table.getItems().addAll(betController.getAllBets());
 
         VBox layout = new VBox(10, table);
         layout.setPadding(new Insets(10));

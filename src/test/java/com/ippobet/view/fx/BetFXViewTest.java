@@ -1,11 +1,14 @@
 package com.ippobet.view.fx;
 
+import com.ippobet.controller.BetController;
 import com.ippobet.model.Bet;
+import com.ippobet.repository.BetRepository;
 import java.util.List;
 import javafx.application.Platform;
 import javafx.scene.control.TableView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.testfx.framework.junit5.ApplicationTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,13 +17,18 @@ public class BetFXViewTest extends ApplicationTest
 {
     private BetFXViewBuilder view;
     private TableView<Bet> table;
+    private BetController controller;
+    private BetRepository betRepository;
+
 
     @BeforeEach
     void setUp() {
         table = new TableView<>();
         table.setEditable(true);
-        view = new BetFXViewBuilder(table);
-        view.build(); // builds UI components, including table
+        betRepository = Mockito.mock(BetRepository.class);
+        controller = new BetController(betRepository);
+        view = new BetFXViewBuilder(table, controller);
+        view.build();
     }
 
     @Test

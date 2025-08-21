@@ -77,8 +77,8 @@ public class App extends Application
         TableView<Bet> table = new TableView<>();
         table.setEditable(true);
         table.setId(BETS_TABLE_ID);
-        BetFXViewBuilder view = new BetFXViewBuilder(table);
-        BetController controller = new BetController(betRepository, view);
+        BetController controller = new BetController(betRepository);
+        BetFXViewBuilder view = new BetFXViewBuilder(table, controller);
         Scene scene = new Scene(view.build());
         primaryStage.setScene(scene);
 
