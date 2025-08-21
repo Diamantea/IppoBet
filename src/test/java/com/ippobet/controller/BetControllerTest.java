@@ -21,4 +21,15 @@ public class BetControllerTest {
 
         Assertions.assertEquals(bets, result);
     }
+
+    @Test
+    void testAddNewBet() {
+        var bet = new Bet("home", "away", "X", 1.2);
+        var repository = Mockito.mock(BetRepository.class);
+        var controller = new BetController(repository);
+
+        controller.addBet(bet);
+
+        Mockito.verify(repository).save(bet);
+    }
 }

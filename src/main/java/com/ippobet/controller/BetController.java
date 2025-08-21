@@ -19,4 +19,9 @@ public class BetController {
     public List<Bet> getAllBets() {
         return betRepository.findAllBets();
     }
+
+    public void addBet(Bet newBet)
+    {
+        betRepository.save(newBet);
+    }
 }
