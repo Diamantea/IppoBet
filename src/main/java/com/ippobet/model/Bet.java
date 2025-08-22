@@ -64,4 +64,16 @@ public class Bet {
     {
         return Objects.hash(homeTeam, awayTeam, outcome, odd);
     }
+
+
+    @Override
+    public String toString()
+    {
+        return "Bet{" +
+            "homeTeam='" + homeTeam + '\'' +
+            ", awayTeam='" + awayTeam + '\'' +
+            ", outcome='" + outcome + '\'' +
+            ", odd=" + odd +
+            '}';
+    }
 }

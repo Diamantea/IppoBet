@@ -41,12 +41,12 @@ public class BetMongoRepositoryTest
             .append(BetMongoRepository.HOME_TEAM_ATTR, "home 1")
             .append(BetMongoRepository.AWAY_TEAM_ATTR, "away 1")
             .append(BetMongoRepository.OUTCOME_ATTR, "outcome 1")
-            .append(BetMongoRepository.ODD_ATTR, 1);
+            .append(BetMongoRepository.ODD_ATTR, 1.);
         Document betTwo = (new Document())
             .append(BetMongoRepository.HOME_TEAM_ATTR, "home 2")
             .append(BetMongoRepository.AWAY_TEAM_ATTR, "away 2")
             .append(BetMongoRepository.OUTCOME_ATTR, "outcome 2")
-            .append(BetMongoRepository.ODD_ATTR, 2);
+            .append(BetMongoRepository.ODD_ATTR, 2.);
         var betsAsDoc = List.of(betOne, betTwo);
         var findIterable = (FindIterable<Document>) Mockito.mock(FindIterable.class);
         Mockito.when(findIterable.spliterator()).thenReturn(betsAsDoc.spliterator());

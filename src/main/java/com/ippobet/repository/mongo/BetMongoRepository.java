@@ -38,17 +38,20 @@ public class BetMongoRepository implements BetRepository
     }
 
 
-    public static List<Bet> toBet(Spliterator<Document> iterator) {
+    public static List<Bet> toBet(Spliterator<Document> iterator)
+    {
         return StreamSupport.stream(iterator, false)
             .map(BetMongoRepository::toBet)
             .toList();
     }
 
+
     public static Bet toBet(Document doc)
     {
         return new Bet(doc.getString(HOME_TEAM_ATTR), doc.getString(AWAY_TEAM_ATTR),
-            doc.getString(OUTCOME_ATTR), doc.getInteger(ODD_ATTR));
+            doc.getString(OUTCOME_ATTR), doc.getDouble(ODD_ATTR));
     }
+
 
     public static Document toDocument(Bet bet)
     {
