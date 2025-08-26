@@ -35,4 +35,11 @@ public class BetController
         betRepository.save(newBet);
         view.updateBets(betRepository.findAllBets());
     }
+
+
+    public void deleteBet(Bet bet)
+    {
+        betRepository.delete(bet);
+        view.updateBets(betRepository.findAllBets());
+    }
 }
