@@ -38,7 +38,7 @@ public class BetFXViewBuilder implements Builder<Region>, BetView
     private TextField outcomeField;
     private TextField oddField;
     private Button addButton;
-    private ObservableList<Bet> betList;
+    private final ObservableList<Bet> betList;
 
 
     public BetFXViewBuilder(TableView<Bet> table)
@@ -134,14 +134,17 @@ public class BetFXViewBuilder implements Builder<Region>, BetView
             Bet newBet = new Bet(homeTeam, awayTeam, outcome, odd);
 
             betController.addBet(newBet);
-            betList.clear();
-            betList.addAll(betController.getAllBets());
 
             clearForm();
-        } catch (NumberFormatException ignored) {
-        } catch (Exception ignored) {
+        }
+        catch (NumberFormatException ignored)
+        {
+        }
+        catch (Exception ignored)
+        {
         }
     }
+
 
     private void clearForm()
     {
