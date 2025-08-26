@@ -74,4 +74,16 @@ public class BetMongoRepositoryTest
 
         Mockito.verify(this.betCollection).insertOne(betToSaveDoc);
     }
+
+
+    @Test
+    void testDeleteDocument()
+    {
+        var bet = new Bet("home 1", "away 1", "X", 1.7);
+        var betDoc = BetMongoRepository.toDocument(bet);
+
+        this.repository.delete(bet);
+
+        Mockito.verify(this.betCollection).deleteOne(betDoc);
+    }
 }

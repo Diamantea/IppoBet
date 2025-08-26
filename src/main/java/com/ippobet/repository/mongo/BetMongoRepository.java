@@ -41,7 +41,7 @@ public class BetMongoRepository implements BetRepository
     @Override
     public void delete(Bet bet)
     {
-        // TODO: To be implemented
+        betCollection.deleteOne(toDocument(bet));
     }
 
 
