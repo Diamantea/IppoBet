@@ -17,13 +17,16 @@ public class BetMongoRepositoryTest
 
 
     @BeforeEach
-    public void setUp() {
+    public void setUp()
+    {
         this.betCollection = (MongoCollection<Document>) Mockito.mock(MongoCollection.class);
         this.repository = new BetMongoRepository(betCollection);
     }
 
+
     @Test
-    void testGetAllBetsWithEmptyCollectionShouldReturnEmptyList() {
+    void testGetAllBetsWithEmptyCollectionShouldReturnEmptyList()
+    {
         var betsAsDoc = List.<Document>of();
         var findIterable = (FindIterable<Document>) Mockito.mock(FindIterable.class);
         Mockito.when(findIterable.spliterator()).thenReturn(betsAsDoc.spliterator());
@@ -35,8 +38,10 @@ public class BetMongoRepositoryTest
         Assertions.assertEquals(expectedBets, actualBets);
     }
 
+
     @Test
-    void testGetAllBetsWithTwoDocumentInCollectionShouldReturnBothBets() {
+    void testGetAllBetsWithTwoDocumentInCollectionShouldReturnBothBets()
+    {
         Document betOne = (new Document())
             .append(BetMongoRepository.HOME_TEAM_ATTR, "home 1")
             .append(BetMongoRepository.AWAY_TEAM_ATTR, "away 1")
@@ -58,8 +63,10 @@ public class BetMongoRepositoryTest
         Assertions.assertEquals(expectedBets, actualBets);
     }
 
+
     @Test
-    void testSaveDocument() {
+    void testSaveDocument()
+    {
         var betToSave = new Bet("home 1", "away 1", "X", 1.7);
         var betToSaveDoc = BetMongoRepository.toDocument(betToSave);
 
