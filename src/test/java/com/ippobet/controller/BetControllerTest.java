@@ -48,5 +48,21 @@ public class BetControllerTest
 
         Mockito.verify(repository).save(bet);
         Mockito.verify(repository).findAllBets();
+        Mockito.verify(view).updateBets(List.of(bet));
+    }
+
+
+    @Test
+    void testDeleteBet()
+    {
+        var bet = new Bet("home", "away", "X", 1.2);
+        Mockito.when(repository.findAllBets())
+            .thenReturn(List.of());
+
+        controller.deleteBet(bet);
+
+        Mockito.verify(repository).delete(bet);
+        Mockito.verify(repository).findAllBets();
+        Mockito.verify(view).updateBets(List.of());
     }
 }

@@ -27,11 +27,12 @@ public class BDDStepDefinition extends ApplicationTest
 {
     public static final MongoDBContainer mongoDBContainer = new MongoDBContainer(DockerImageName.parse("mongo:8.0.12"));
     private static final String DB_NAME = "bet";
-    private static final String COLLECTION_NAME = "event";
     private MongoClient mongoClient;
     private MongoCollection<Document> betCollection;
+
     private List<Bet> betsToAddInDB;
     private List<Bet> expected;
+    private Bet firstBetInTheList;
 
     static
     {
@@ -56,12 +57,13 @@ public class BDDStepDefinition extends ApplicationTest
     {
         betsToAddInDB = new ArrayList<>();
         expected = new ArrayList<>();
+        firstBetInTheList = null;
 
         mongoClient = MongoClients.create(mongoDBContainer.getConnectionString());
         mongoClient.getDatabase(DB_NAME).drop();
-        mongoClient.getDatabase(DB_NAME).createCollection(COLLECTION_NAME);
+        mongoClient.getDatabase(DB_NAME).createCollection(App.BET_COLLECTION);
 
-        betCollection = mongoClient.getDatabase(DB_NAME).getCollection(COLLECTION_NAME);
+        betCollection = mongoClient.getDatabase(DB_NAME).getCollection(App.BET_COLLECTION);
     }
 
 
@@ -144,5 +146,35 @@ public class BDDStepDefinition extends ApplicationTest
     {
         var addButton = (Button) lookup("#" + BetFXViewBuilder.ADD_BUTTON_INPUT_ID).query();
         addButton.fire();
+    }
+
+
+    @When("user select the first bet in the list")
+    public void userSelectTheFirstBetInTheList()
+    {
+        TableView<Bet> query = lookup("#" + App.BETS_TABLE_ID).query();
+        query.getSelectionModel().select(0);
+        query.scrollTo(0);
+
+        firstBetInTheList = query.getItems().getFirst();
+    }
+
+
+    @When("click the delete button")
+    public void clickTheDeleteButton()
+    {
+        var deleteButton = (Button) lookup("#" + BetFXViewBuilder.DELETE_BUTTON_INPUT_ID).query();
+        deleteButton.fire();
+    }
+
+
+    @Then("first bet in the list is correctly deleted")
+    public void firstBetInTheListIsCorrectlyDeleted()
+    {
+        var query = new Document(BetMongoRepository.HOME_TEAM_ATTR, firstBetInTheList.getHomeTeam());
+        Assertions.assertNull(betCollection.find(query).first());
+
+        TableView<Bet> table = lookup("#" + App.BETS_TABLE_ID).query();
+        Assertions.assertEquals(-1, table.getItems().indexOf(firstBetInTheList));
     }
 }

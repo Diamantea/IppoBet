@@ -38,6 +38,13 @@ public class BetMongoRepository implements BetRepository
     }
 
 
+    @Override
+    public void delete(Bet bet)
+    {
+        betCollection.deleteOne(toDocument(bet));
+    }
+
+
     public static List<Bet> toBet(Spliterator<Document> iterator)
     {
         return StreamSupport.stream(iterator, false)
