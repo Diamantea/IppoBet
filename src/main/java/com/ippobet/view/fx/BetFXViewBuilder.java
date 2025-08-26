@@ -130,42 +130,23 @@ public class BetFXViewBuilder implements Builder<Region>, BetView
 
     private void addNewBet()
     {
-        try
-        {
-            String homeTeam = homeTeamField.getText().trim();
-            String awayTeam = awayTeamField.getText().trim();
-            String outcome = outcomeField.getText().trim();
-            double odd = Double.parseDouble(oddField.getText().trim());
+        String homeTeam = homeTeamField.getText().trim();
+        String awayTeam = awayTeamField.getText().trim();
+        String outcome = outcomeField.getText().trim();
+        double odd = Double.parseDouble(oddField.getText().trim());
 
-            Bet newBet = new Bet(homeTeam, awayTeam, outcome, odd);
+        Bet newBet = new Bet(homeTeam, awayTeam, outcome, odd);
 
-            betController.addBet(newBet);
+        betController.addBet(newBet);
 
-            clearForm();
-        }
-        catch (NumberFormatException ignored)
-        {
-        }
-        catch (Exception ignored)
-        {
-        }
+        clearForm();
     }
 
 
     private void deleteNewBet()
     {
-        try
-        {
-            var betToDelete = table.getSelectionModel().getSelectedItem();
-
-            betController.deleteBet(betToDelete);
-        }
-        catch (NumberFormatException ignored)
-        {
-        }
-        catch (Exception ignored)
-        {
-        }
+        var betToDelete = table.getSelectionModel().getSelectedItem();
+        betController.deleteBet(betToDelete);
     }
 
 
