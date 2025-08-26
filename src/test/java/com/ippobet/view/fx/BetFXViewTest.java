@@ -22,7 +22,8 @@ public class BetFXViewTest extends ApplicationTest
 
 
     @BeforeEach
-    void setUp() {
+    void setUp()
+    {
         table = new TableView<>();
         table.setEditable(true);
         betRepository = Mockito.mock(BetRepository.class);
@@ -31,8 +32,10 @@ public class BetFXViewTest extends ApplicationTest
         view.build();
     }
 
+
     @Test
-    void testUpdateBetsUpdatesTable() throws Exception {
+    void testUpdateBetsUpdatesTable() throws Exception
+    {
         Bet bet1 = new Bet("Team A", "Team B", "1", 2.5);
         Bet bet2 = new Bet("Team C", "Team D", "X", 3.1);
         List<Bet> bets = List.of(bet1, bet2);

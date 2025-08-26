@@ -17,44 +17,61 @@ public class BetMongoRepositoryTest
 
 
     @BeforeEach
-    public void setUp() {
+    public void setUp()
+    {
         this.betCollection = (MongoCollection<Document>) Mockito.mock(MongoCollection.class);
         this.repository = new BetMongoRepository(betCollection);
     }
 
+
     @Test
-    void testGetAllBetsWithEmptyCollectionShouldReturnEmptyList() {
+    void testGetAllBetsWithEmptyCollectionShouldReturnEmptyList()
+    {
         var betsAsDoc = List.<Document>of();
         var findIterable = (FindIterable<Document>) Mockito.mock(FindIterable.class);
         Mockito.when(findIterable.spliterator()).thenReturn(betsAsDoc.spliterator());
         Mockito.when(this.betCollection.find()).thenReturn(findIterable);
 
-        List<Bet> actualBets = this.repository.findAllBets();
+        var actualBets = this.repository.findAllBets();
 
-        List<Bet> expectedBets = List.of();
+        var expectedBets = List.<Bet>of();
         Assertions.assertEquals(expectedBets, actualBets);
     }
 
+
     @Test
-    void testGetAllBetsWithTwoDocumentInCollectionShouldReturnBothBets() {
+    void testGetAllBetsWithTwoDocumentInCollectionShouldReturnBothBets()
+    {
         Document betOne = (new Document())
             .append(BetMongoRepository.HOME_TEAM_ATTR, "home 1")
             .append(BetMongoRepository.AWAY_TEAM_ATTR, "away 1")
             .append(BetMongoRepository.OUTCOME_ATTR, "outcome 1")
-            .append(BetMongoRepository.ODD_ATTR, 1);
+            .append(BetMongoRepository.ODD_ATTR, 1.);
         Document betTwo = (new Document())
             .append(BetMongoRepository.HOME_TEAM_ATTR, "home 2")
             .append(BetMongoRepository.AWAY_TEAM_ATTR, "away 2")
             .append(BetMongoRepository.OUTCOME_ATTR, "outcome 2")
-            .append(BetMongoRepository.ODD_ATTR, 2);
+            .append(BetMongoRepository.ODD_ATTR, 2.);
         var betsAsDoc = List.of(betOne, betTwo);
         var findIterable = (FindIterable<Document>) Mockito.mock(FindIterable.class);
         Mockito.when(findIterable.spliterator()).thenReturn(betsAsDoc.spliterator());
         Mockito.when(this.betCollection.find()).thenReturn(findIterable);
 
-        List<Bet> actualBets = this.repository.findAllBets();
+        var actualBets = this.repository.findAllBets();
 
-        List<Bet> expectedBets = BetMongoRepository.toBet(betsAsDoc.spliterator());
+        var expectedBets = BetMongoRepository.toBet(betsAsDoc.spliterator());
         Assertions.assertEquals(expectedBets, actualBets);
+    }
+
+
+    @Test
+    void testSaveDocument()
+    {
+        var betToSave = new Bet("home 1", "away 1", "X", 1.7);
+        var betToSaveDoc = BetMongoRepository.toDocument(betToSave);
+
+        this.repository.save(betToSave);
+
+        Mockito.verify(this.betCollection).insertOne(betToSaveDoc);
     }
 }
