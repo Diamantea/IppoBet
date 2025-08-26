@@ -22,6 +22,7 @@ import org.bson.Document;
 public class App extends Application
 {
     public static final String BETS_TABLE_ID = "bets_table";
+    public static final String BET_COLLECTION = "bet";
 
     private static final String DEFAULT_DB_HOST = "localhost";
     private static final int DEFAULT_DB_PORT = 27017;
@@ -31,7 +32,6 @@ public class App extends Application
     private static final String DB_PORT_INPUT_PARAM = "dbPort";
     private static final String DB_NAME_INPUT_PARAM = "dbName";
     private static final String CONN_STRING = "mongodb://%s:%d/";
-    private static final String BET_COLLECTION = "bet";
 
 
     @Override

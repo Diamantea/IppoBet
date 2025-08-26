@@ -30,6 +30,7 @@ public class BetFXViewBuilder implements Builder<Region>, BetView
     public static final String OUTCOME_INPUT_ID = "outcomeInput";
     public static final String ODD_INPUT_ID = "oddInput";
     public static final String ADD_BUTTON_INPUT_ID = "addButton";
+    public static final String DELETE_BUTTON_INPUT_ID = "deleteButton";
 
     private final TableView<Bet> table;
     private BetController betController;
@@ -38,6 +39,7 @@ public class BetFXViewBuilder implements Builder<Region>, BetView
     private TextField outcomeField;
     private TextField oddField;
     private Button addButton;
+    private Button deleteButton;
     private final ObservableList<Bet> betList;
 
 
@@ -89,7 +91,7 @@ public class BetFXViewBuilder implements Builder<Region>, BetView
         VBox layout = new VBox(15);
         layout.setPadding(new Insets(10));
 
-        Region addBetForm = createAddBetForm();
+        Region addBetForm = createBetForm();
         layout.getChildren().addAll(addBetForm, table);
 
         betController.showAllBets();
@@ -119,6 +121,10 @@ public class BetFXViewBuilder implements Builder<Region>, BetView
         addButton = new Button("Add Bet");
         addButton.setId(ADD_BUTTON_INPUT_ID);
         addButton.setOnAction(e -> addNewBet());
+
+        deleteButton = new Button("Delete Bet");
+        deleteButton.setId(DELETE_BUTTON_INPUT_ID);
+        deleteButton.setOnAction(e -> deleteNewBet());
     }
 
 
@@ -146,6 +152,23 @@ public class BetFXViewBuilder implements Builder<Region>, BetView
     }
 
 
+    private void deleteNewBet()
+    {
+        try
+        {
+            var betToDelete = table.getSelectionModel().getSelectedItem();
+
+            betController.deleteBet(betToDelete);
+        }
+        catch (NumberFormatException ignored)
+        {
+        }
+        catch (Exception ignored)
+        {
+        }
+    }
+
+
     private void clearForm()
     {
         homeTeamField.clear();
@@ -155,7 +178,7 @@ public class BetFXViewBuilder implements Builder<Region>, BetView
     }
 
 
-    private Region createAddBetForm()
+    private Region createBetForm()
     {
         GridPane form = new GridPane();
         form.setHgap(10);
@@ -178,6 +201,7 @@ public class BetFXViewBuilder implements Builder<Region>, BetView
         HBox buttonBox = new HBox();
         buttonBox.setAlignment(Pos.CENTER_LEFT);
         buttonBox.getChildren().add(addButton);
+        buttonBox.getChildren().add(deleteButton);
         form.add(buttonBox, 1, 2, 2, 1);
 
         return form;
