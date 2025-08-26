@@ -147,6 +147,25 @@
                         </execution>
                     </executions>
                 </plugin>
+                <plugin>
+                    <groupId>org.pitest</groupId>
+                    <artifactId>pitest-maven</artifactId>
+                    <version>1.20.2</version>
+                    <configuration>
+                        <targetClasses>
+                            <param>com.ippobet.controller.*</param>
+                            <param>com.ippobet.repository.mongo.*</param>
+                        </targetClasses>
+                        <targetTests>
+                            <param>com.ippobet.controller.*</param>
+                            <param>com.ippobet.repository.mongo.*</param>
+                        </targetTests>
+                        <mutators>
+                            <!-- check https://pitest.org/quickstart/mutators/ -->
+                            <mutator>ALL</mutator>
+                        </mutators>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
@@ -160,6 +179,25 @@
                         <!-- configured in pluginManagement -->
                         <groupId>org.jacoco</groupId>
                         <artifactId>jacoco-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>mutation-testing</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-maven</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>mutationCoverage</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>
