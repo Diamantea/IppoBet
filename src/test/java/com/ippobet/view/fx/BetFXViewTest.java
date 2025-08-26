@@ -27,8 +27,9 @@ public class BetFXViewTest extends ApplicationTest
         table = new TableView<>();
         table.setEditable(true);
         betRepository = Mockito.mock(BetRepository.class);
-        controller = new BetController(betRepository);
-        view = new BetFXViewBuilder(table, controller);
+        view = new BetFXViewBuilder(table);
+        controller = new BetController(betRepository, view);
+        view.setEventController(controller);
         view.build();
     }
 

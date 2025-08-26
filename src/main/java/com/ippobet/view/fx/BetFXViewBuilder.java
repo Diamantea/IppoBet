@@ -10,7 +10,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -19,7 +23,8 @@ import javafx.scene.layout.VBox;
 import javafx.util.Builder;
 import javafx.util.converter.DoubleStringConverter;
 
-public class BetFXViewBuilder implements Builder<Region>, BetView {
+public class BetFXViewBuilder implements Builder<Region>, BetView
+{
     public static final String HOME_TEAM_INPUT_ID = "homeTeamInput";
     public static final String AWAY_TEAM_INPUT_ID = "awayTeamInput";
     public static final String OUTCOME_INPUT_ID = "outcomeInput";
@@ -27,7 +32,7 @@ public class BetFXViewBuilder implements Builder<Region>, BetView {
     public static final String ADD_BUTTON_INPUT_ID = "addButton";
 
     private final TableView<Bet> table;
-    private final BetController betController;
+    private BetController betController;
     private TextField homeTeamField;
     private TextField awayTeamField;
     private TextField outcomeField;
@@ -36,12 +41,18 @@ public class BetFXViewBuilder implements Builder<Region>, BetView {
     private ObservableList<Bet> betList;
 
 
-    public BetFXViewBuilder(TableView<Bet> table, BetController betController) {
+    public BetFXViewBuilder(TableView<Bet> table)
+    {
         this.table = table;
         this.betList = FXCollections.observableArrayList();
-        this.betController = betController;
         table.setItems(betList);
         initializeInputFields();
+    }
+
+
+    public void setEventController(BetController eventController)
+    {
+        this.betController = eventController;
     }
 
 
@@ -50,6 +61,7 @@ public class BetFXViewBuilder implements Builder<Region>, BetView {
     {
         table.setItems(FXCollections.observableList(bets));
     }
+
 
     @Override
     public Region build()
@@ -73,7 +85,6 @@ public class BetFXViewBuilder implements Builder<Region>, BetView {
         table.getColumns().addAll(homeTeamCol, awayTeamCol, outcomeCol, oddCol);
 
         betList.clear();
-        betList.addAll(betController.getAllBets());
 
         VBox layout = new VBox(15);
         layout.setPadding(new Insets(10));
@@ -81,10 +92,14 @@ public class BetFXViewBuilder implements Builder<Region>, BetView {
         Region addBetForm = createAddBetForm();
         layout.getChildren().addAll(addBetForm, table);
 
+        betController.showAllBets();
+
         return layout;
     }
 
-    private void initializeInputFields() {
+
+    private void initializeInputFields()
+    {
         homeTeamField = new TextField();
         homeTeamField.setPromptText("Enter home team");
         homeTeamField.setId(HOME_TEAM_INPUT_ID);
@@ -106,8 +121,11 @@ public class BetFXViewBuilder implements Builder<Region>, BetView {
         addButton.setOnAction(e -> addNewBet());
     }
 
-    private void addNewBet() {
-        try {
+
+    private void addNewBet()
+    {
+        try
+        {
             String homeTeam = homeTeamField.getText().trim();
             String awayTeam = awayTeamField.getText().trim();
             String outcome = outcomeField.getText().trim();
@@ -125,14 +143,17 @@ public class BetFXViewBuilder implements Builder<Region>, BetView {
         }
     }
 
-    private void clearForm() {
+    private void clearForm()
+    {
         homeTeamField.clear();
         awayTeamField.clear();
         outcomeField.clear();
         oddField.clear();
     }
 
-    private Region createAddBetForm() {
+
+    private Region createAddBetForm()
+    {
         GridPane form = new GridPane();
         form.setHgap(10);
         form.setVgap(10);

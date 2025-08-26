@@ -40,30 +40,39 @@ public class App extends Application
         Map<String, String> namedParams = getParameters().getNamed();
 
         String dbHost = DEFAULT_DB_HOST;
-        if (namedParams.containsKey(DB_HOST_INPUT_PARAM)) {
+        if (namedParams.containsKey(DB_HOST_INPUT_PARAM))
+        {
             dbHost = namedParams.get(DB_HOST_INPUT_PARAM);
-            if (dbHost.isBlank()) {
+            if (dbHost.isBlank())
+            {
                 throw new EmptyInputParameterException(DB_HOST_INPUT_PARAM);
             }
         }
 
         int dbPort = DEFAULT_DB_PORT;
-        if (namedParams.containsKey(DB_PORT_INPUT_PARAM)) {
+        if (namedParams.containsKey(DB_PORT_INPUT_PARAM))
+        {
             String rawPort = namedParams.get(DB_PORT_INPUT_PARAM);
-            if (rawPort.isBlank()) {
+            if (rawPort.isBlank())
+            {
                 throw new EmptyInputParameterException(DB_PORT_INPUT_PARAM);
             }
-            try {
+            try
+            {
                 dbPort = Integer.parseInt(rawPort);
-            } catch(NumberFormatException e) {
+            }
+            catch (NumberFormatException e)
+            {
                 throw new DatabasePortInvalidException(e);
             }
         }
 
         String dbName = DEFAULT_DB_NAME;
-        if (namedParams.containsKey(DB_NAME_INPUT_PARAM)) {
+        if (namedParams.containsKey(DB_NAME_INPUT_PARAM))
+        {
             dbName = namedParams.get(DB_NAME_INPUT_PARAM);
-            if (dbName.isBlank()) {
+            if (dbName.isBlank())
+            {
                 throw new EmptyInputParameterException(DB_NAME_INPUT_PARAM);
             }
         }
@@ -77,8 +86,9 @@ public class App extends Application
         TableView<Bet> table = new TableView<>();
         table.setEditable(true);
         table.setId(BETS_TABLE_ID);
-        BetController controller = new BetController(betRepository);
-        BetFXViewBuilder view = new BetFXViewBuilder(table, controller);
+        BetFXViewBuilder view = new BetFXViewBuilder(table);
+        BetController controller = new BetController(betRepository, view);
+        view.setEventController(controller);
         Scene scene = new Scene(view.build());
         primaryStage.setScene(scene);
 
