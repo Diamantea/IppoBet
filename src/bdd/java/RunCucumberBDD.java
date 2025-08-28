@@ -10,7 +10,7 @@ import static io.cucumber.junit.platform.engine.Constants.FEATURES_PROPERTY_NAME
 @IncludeEngines("cucumber")
 @ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty")
 @ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "com.ippobet")
-@ConfigurationParameter(key = FEATURES_PROPERTY_NAME, value = "src/test/resources/bdd")
-public class RunCucumberTest
+@ConfigurationParameter(key = FEATURES_PROPERTY_NAME, value = "src/bdd/resources")
+public class RunCucumberBDD
 {
 }
